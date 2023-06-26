@@ -1,0 +1,2 @@
+module Public::PostRoutinesHelper
+end
