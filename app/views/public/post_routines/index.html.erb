@@ -1,2 +1,39 @@
-<h1>Public::PostRoutines#index</h1>
-<p>Find me in app/views/public/post_routines/index.html.erb</p>
+<div class="container">
+  <div class="row">
+    <h3>ROUTINE一覧</h3>
+    <div class="col-12">
+      <table class="table text-center">
+      <% @post_routine.each do |routine| %>
+        <tr>
+          <td rowspan=3>
+            <%= link_to public_post_routines_show_path(routine) do %>
+            <%= image_tag routine.user.get_profile_image(100,100) %>
+            <% end %>
+          </td>
+          <td colspan=2>
+            <%= routine.routine_info %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <%= routine.user.user_name %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="btn btn-success">
+              コメントする
+            </button>
+          </td>
+          <td>
+            <p>いいね数</p>
+          </td>
+        </tr>
+
+
+      <% end %>
+      </table>
+
+    </div>
+  </div>
+</div>

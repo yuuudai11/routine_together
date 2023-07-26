@@ -1,0 +1,7 @@
+  ja:
+    enums:
+      post_routine:
+        genre:
+          study: "学習"
+          exercise: "運動"
+          others: "その他"

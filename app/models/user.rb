@@ -6,7 +6,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one_attached :image
-  has_many :post_routine
+  has_many :post_routines
+  has_many :comments
 
   def get_profile_image(width, height)
     unless image.attached?

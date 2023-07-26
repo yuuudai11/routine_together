@@ -1,46 +1,110 @@
-  <h2>会員情報</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>
-          <%= image_tag @user.get_profile_image(100,100) %>
-        </th>
-      </tr>
-      <tr>
-        <th>ユーザーネーム</th>
-        <th><%= @user.user_name %></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><b>ステータス</b></td>
-        <td>
-          <b>genreを参照</b>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <!--user編集リンク-->
-  <div class="col-lg-10">
-    <%= link_to root_path do %>
-    <button class="btn btn-outline-secondary btn-block">
-      会員を編集する
-      <!--<i class="fas fa-user-cog"></i>-->
-    </button>
-    <% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-10 mx-auto mt-3">
+      <h3>User Info</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              <!--ユーザーの画像を表示-->
+              <%= image_tag @user.get_profile_image(100,100) %>
+            </th>
+          </tr>
+          <tr>
+            <!--ユーザーネームを表示-->
+            <th>ユーザーネーム</th>
+            <th><%= @user.user_name %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>ステータス</b></td>
+            <td>
+              <b>statusを参照</b>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <div class="mt-3">
-    <h2>New book</h2>
-    <%= form_with model: @post_routine, url: public_post_routine_create_path do |f| %>
 
-    <p>MY ROUTINE</p>
-    <div class="form-group">
-      <%= f.text_area :routine_info, placeholder: "習慣を書いてください" %>
+  <!--user編集pegeへのボタン-->
+  <div class="row">
+    <div class="col-10 mx-auto mt-3">
+      <%= link_to public_users_edit_path(@user) do %>
+      <button class="btn btn-secondary btn-block">
+        会員を編集する
+        <!--<i class="fas fa-user-cog"></i>-->
+      </button>
+      <% end %>
     </div>
+  </div>
 
-    <div class="form-group">
-      <%= f.submit 'Create Book', class: "btn btn-success" %>
+
+  <div class="row">
+    <div class="col-10 mx-auto">
+      <h3>MT ROUTINE</h3>
+      <% if @post_routines.any? %>
+      <table>
+        <% @post_routines.each do |routine| %>
+        <tr>
+          <td>
+            <h3>
+              <font color="blue">
+                <%= routine.routine_info %>
+              </font>
+            </h3>
+          </td>
+        </tr>
+
+
+        <tr>
+          <td>
+            <button class="btn btn-info">
+              達成できた！
+            </button>
+          </td>
+          
+          <td>
+            
+          </td>
+
+          <td>
+            <%= link_to public_post_routines_show_path(routine) do %>
+            <button class="btn btn-primary">
+              詳細を見る
+            </button>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+      <% end %>
+
+  <!--習慣を登録、投稿する-->
+      <h3>POST ROUTINE</h3>
+      <%= form_with model: @post_routine, url: public_post_routines_create_path, method: :post do |f| %>
+      <div class="form-group">
+        <%= f.text_area :routine_info, placeholder: "習慣を書いてください" %>
+      </div>
+
+<!--ジャンルを指定するラジオボタン-->
+      <h5>ジャンルを選んでください</h5>
+      <div class="form-group">
+        <%= f.radio_button :genre, "study", checked: true %>
+        <%= f.label :genre, "勉強" %>
+
+        <%= f.radio_button :genre, "exercise" %>
+        <%= f.label :genre, "運動" %>
+
+        <%= f.radio_button :genre, "others" %>
+        <%= f.label :genre, "その他" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.submit 'ROUTINE投稿', class: "btn btn-success" %>
+      </div>
+      <% end %>
     </div>
-    <% end %>
   </div>
 </div>

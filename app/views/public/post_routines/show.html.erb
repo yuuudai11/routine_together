@@ -1,2 +1,84 @@
-<h1>Public::PostRoutines#show</h1>
-<p>Find me in app/views/public/post_routines/show.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-10 mx-auto mt-3">
+      <h3>Routine Info</h3>
+      <table class="table">
+        <tr>
+          <td>
+            <h3>
+              <font color="blue">
+                <%= @post_routine.routine_info %>
+              </font>
+            </h3>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <% if @post_routine.user_id == current_user.id %>
+            <%= link_to public_post_routines_edit_path(@post_routine) do %>
+            <button class="btn btn-secondary">
+              編集する
+            </button>
+            <% end %>
+            <% end %>
+          </td>
+
+          <td>
+            <% if @post_routine.user_id == current_user.id %>
+            <%= link_to public_post_routines_destroy_path(@post_routine), method: :delete,
+            "data-confirm" => "本当に削除しますか？" do %>
+            <button class="btn btn-danger">
+              削除する
+            </button>
+            <% end %>
+            <% end %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <p>投稿した日:<%= @post_routine.created_at.strftime('%Y/%m/%d') %></p>
+          </td>
+        </tr>
+      </table>
+
+
+      <h3>Comment</h3>
+
+
+      <% @comments.each do |c| %>
+      <table class="table">
+        <tr>
+          <td>
+            <%= c.comment %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            ユーザーネーム：<%= c.user.user_name %>
+          </td>
+          <td>
+             <!--if @comment.user_id == current_user.id %>-->
+            <%= link_to public_comments_destroy_path(c), method: :delete,
+            "data-confirm" => "本当に削除しますか？" do %>
+            <button>
+              コメント削除
+            </button>
+             <!--end %>-->
+            <% end %>
+          </td>
+        </tr>
+      </table>
+      <% end %>
+
+      <%= form_with model: @comment, url: public_comments_create_path(@post_routine),method: :post do |f| %>
+      <div class="form-group">
+        <%= f.text_area :comment, placeholder: "コメントを書く" %>
+      </div>
+      <%= f.submit 'コメントを投稿', class: "btn btn-success" %>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+

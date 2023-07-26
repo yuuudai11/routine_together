@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_25_085718) do
+ActiveRecord::Schema.define(version: 2023_07_24_123550) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2023_06_25_085718) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "routine_id", null: false
+    t.integer "post_routine_id", null: false
     t.text "comment", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -69,10 +69,7 @@ ActiveRecord::Schema.define(version: 2023_06_25_085718) do
 
   create_table "post_routines", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "favorite_id", null: false
-    t.integer "comment_id", null: false
-    t.integer "status_id", default: 0, null: false
-    t.integer "continue_days", null: false
+    t.integer "continue_days", default: 0, null: false
     t.text "routine_info", null: false
     t.integer "genre", null: false
     t.datetime "created_at", precision: 6, null: false

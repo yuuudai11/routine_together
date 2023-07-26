@@ -1,2 +1,49 @@
-<h1>Public::Users#edit</h1>
-<p>Find me in app/views/public/users/edit.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-8 mt-3">
+      <h3>User Editing</h3>
+      <%= form_with model: @user,url: public_users_update_path do |f| %>
+      <table>
+        <tr>
+          <%= f.file_field :image, accept: "image/*" %>
+        </tr>
+
+        <tr>
+          <td>
+            ユーザーネーム
+          </td>
+          <td>
+            <%= f.text_field :user_name, :placeholder => "#{current_user.user_name}" %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            Email
+          </td>
+          <td>
+            <%= f.text_field :email, :placeholder => "#{current_user.email}" %>
+          </td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td>
+            <div class="form_group">
+              <%= f.submit "編集内容を保存", class: "btn btn-success" %>
+            </div>
+          </td>
+          <td>
+            <%= link_to public_users_withdrawal_path do %>
+            <button class="btn btn-danger">
+              退会する
+            </button>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+      <% end %>
+    </div>
+  </div>
+</div>

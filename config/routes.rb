@@ -8,27 +8,27 @@ Rails.application.routes.draw do
   root to: 'public/homes#top'
   get '/about' => 'public/homes#about'
   namespace :public do
-    get 'comments/create'
-    get 'comments/destroy'
+    post 'comments/create/:id' => "comments#create", as: "comments_create"
+    get 'comments/destroy/:id' => "comments#destroy", as: "comments_destroy"
 
     get 'favorites/create'
     get 'favorites/destroy'
 
     get 'statuses/index'
 
-    get 'post_routines/index'
-    get 'post_routines/destroy'
-    post 'post_routines/create' => "post_routine#create", as: "post_routine_create"
-    get 'post_routines/update'
-    get 'post_routines/show'
-    get 'post_routines/edit'
+    get 'post_routines/index' => "post_routines#index", as: "post_routines_index"
+    delete 'post_routines/destroy/:id' => "post_routines#destroy", as: "post_routines_destroy"
+    post 'post_routines/create' => "post_routines#create", as: "post_routines_create"
+    patch 'post_routines/update/:id' => "post_routines#update", as: "post_routines_update"
+    get 'post_routines/show/:id' => "post_routines#show", as: "post_routines_show"
+    get 'post_routines/edit/:id' => "post_routines#edit", as: "post_routines_edit"
 
     get 'users/index'
     get 'users/show/:id' => "users#show", as: "users_show"
-    get 'users/edit'
-    get 'users/update'
-    get 'users/withdrawal'
-    get 'users/withdraw'
+    get 'users/edit/:id' => "users#edit", as: "users_edit"
+    patch 'users/update/:id' => "users#update", as: "users_update"
+    get 'users/withdrawal' => "users#withdrawal"
+    patch 'users/withdraw' => "users#withdraw"
 
   end
   # 管理者用
