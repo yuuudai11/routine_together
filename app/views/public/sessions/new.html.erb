@@ -1,4 +1,12 @@
-<h2>Log in</h2>
+<% if flash[:notice] %>
+<div class="alert-success" role="alert">
+  <p class="notice text-center" style="color:green;">
+    <%= flash[:notice] %>
+  </p>
+</div>
+<% end %>
+
+<h2>ログイン</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 

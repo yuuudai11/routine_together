@@ -1,10 +1,18 @@
+<% if flash[:notice] %>
+<div class="alert-success" role="alert">
+  <p class="notice text-center" style="color:green;">
+    <%= flash[:notice] %>
+  </p>
+</div>
+<% end %>
+
 <div class="container">
   <div class="row">
     <div class="col-10 mx-auto mt-3">
       <h3>Routine Info</h3>
       <table class="table">
         <tr>
-          <td>
+          <td colspan="2">
             <h3>
               <font color="blue">
                 <%= @post_routine.routine_info %>
@@ -36,20 +44,20 @@
         </tr>
 
         <tr>
-          <td>
-            <p>投稿した日:<%= @post_routine.created_at.strftime('%Y/%m/%d') %></p>
+          <td colspan="2">
+            <p>始めた日:<%= @post_routine.created_at.strftime('%Y/%m/%d') %></p>
           </td>
         </tr>
       </table>
 
 
       <h3>Comment</h3>
-
+      <p>※中傷や荒らしはしないこと！</p>
 
       <% @comments.each do |c| %>
       <table class="table">
         <tr>
-          <td>
+          <td colspan="3">
             <%= c.comment %>
           </td>
         </tr>
@@ -58,13 +66,16 @@
             ユーザーネーム：<%= c.user.user_name %>
           </td>
           <td>
-             <!--if @comment.user_id == current_user.id %>-->
+            コメントした日：<%= c.updated_at.strftime('%Y/%m/%d') %>
+          </td>
+          <td>
+            <% if c.user_id == current_user.id %>
             <%= link_to public_comments_destroy_path(c), method: :delete,
             "data-confirm" => "本当に削除しますか？" do %>
             <button>
               コメント削除
             </button>
-             <!--end %>-->
+            <% end %>
             <% end %>
           </td>
         </tr>
@@ -72,8 +83,9 @@
       <% end %>
 
       <%= form_with model: @comment, url: public_comments_create_path(@post_routine),method: :post do |f| %>
+
       <div class="form-group">
-        <%= f.text_area :comment, placeholder: "コメントを書く" %>
+        <%= f.text_area :comment, placeholder: "コメントを書く(1~50)" %>
       </div>
       <%= f.submit 'コメントを投稿', class: "btn btn-success" %>
       <% end %>

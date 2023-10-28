@@ -5,12 +5,16 @@ class Public::RegistrationsController < Devise::RegistrationsController
 
 
   def after_sign_in_path_for(resource)
-    root_path
+    public_users_show_path(current_user)
   end
 
   def after_sign_out_path_for(resource)
-    about_path
+    root_path
   end
+
+
+
+
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
@@ -75,4 +79,5 @@ class Public::RegistrationsController < Devise::RegistrationsController
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:email])
   end
+
 end

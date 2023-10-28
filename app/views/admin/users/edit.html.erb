@@ -1,2 +1,63 @@
-<h1>Admin::Users#edit</h1>
-<p>Find me in app/views/admin/users/edit.html.erb</p>
+<div class="container">
+  <div class="row mt-3">
+    <%= @user.user_name %>さんの会員情報編集
+  </div>
+  <div class="row mt-3">
+    <div class="col-12">
+      <%= form_with model: @user, url: admin_user_update_path(@user) do |f| %>
+      <table>
+        <tr>
+          <td>
+            <%= f.label :id, "会員ID" %>
+          </td>
+          <td>
+            <%= f.label :id, @user.id %>
+          </td>
+          <td> </td>
+        </tr>
+
+        <tr>
+          <td>
+            <%= f.label :user_name, "ユーザーネーム" %>
+          </td>
+          <td>
+            <%= f.label :user_name, @user.user_name %>
+          </td>
+          <td> </td>
+        </tr>
+
+        <tr>
+          <td>
+            <%= f.label :email, "メールアドレス" %>
+          </td>
+          <td>
+            <%= f.text_field :email, :placeholder => @user.email %>
+          </td>
+          <td> </td>
+        </tr>
+
+        <tr>
+          <td>
+            <%= f.label :is_deleted, "会員ステータス" %>
+          </td>
+          <td>
+            <%= f.radio_button :is_deleted, "false" %>
+            <%= f.label :is_deleted, "有効", class: "text-success" %>
+            <%= f.radio_button :is_deleted, "true" %>
+            <%= f.label :is_deleted, "退会", class: "text-muted" %>
+          </td>
+          <td> </td>
+        </tr>
+
+        <tr>
+          <td> </td>
+          <td>
+            <%= f.submit "変更を保存", class: "btn btn-success" %>
+          </td>
+          <td> </td>
+        </tr>
+      </table>
+      <% end %>
+    </div>
+  </div>
+</div>

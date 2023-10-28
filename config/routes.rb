@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # 顧客用
   # URL /users/sign_in ...
-  devise_for :users,skip: [:passwords], controllers: {
+  devise_for :user,skip: [:passwords], controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
@@ -9,10 +9,10 @@ Rails.application.routes.draw do
   get '/about' => 'public/homes#about'
   namespace :public do
     post 'comments/create/:id' => "comments#create", as: "comments_create"
-    get 'comments/destroy/:id' => "comments#destroy", as: "comments_destroy"
+    delete 'comments/destroy/:id' => "comments#destroy", as: "comments_destroy"
 
-    get 'favorites/create'
-    get 'favorites/destroy'
+    post 'favorites/create/:id' => "favorites#create", as: "favorites_create"
+    delete 'favorites/destroy/:id' => "favorites#destroy", as: "favorites_destroy"
 
     get 'statuses/index'
 
@@ -22,6 +22,13 @@ Rails.application.routes.draw do
     patch 'post_routines/update/:id' => "post_routines#update", as: "post_routines_update"
     get 'post_routines/show/:id' => "post_routines#show", as: "post_routines_show"
     get 'post_routines/edit/:id' => "post_routines#edit", as: "post_routines_edit"
+    post 'post_routines/count_up/:id' => 'post_routines#count_up', as: "post_routines_count_up"
+    post 'post_routines/count0/:id' => 'post_routines#count0', as: "post_routines_count0"
+    get 'post_routines/study' => "post_routines#study", as: "post_routines_study"
+    get 'post_routines/exercise' => "post_routines#exercise", as: "post_routines_exercise"
+    get 'post_routines/others' => "post_routines#others", as: "post_routines_others"
+
+
 
     get 'users/index'
     get 'users/show/:id' => "users#show", as: "users_show"
@@ -39,20 +46,18 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/' => 'homes#top'
 
-    get 'comments/index'
-    get 'comments/show'
-    get 'comments/destroy'
+    resources :comments, only: [:index, :show]
+    delete 'comments/destroy/:id' => "comments#destroy", as: "comments_destroy"
 
-    get 'statuses/index'
-    get 'statuses/edit'
-    get 'statuses/update'
-    get 'statuses/create'
-
-    get 'users/index'
-    get 'users/show'
-    get 'users/edit'
-    get 'users/update'
+    resources :users, only: [:index, :show]
+    get 'users/edit/:id' => "users#edit", as: "user_edit"
+    patch 'users/update/:id' => "users#update", as: "user_update"
 
   end
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+#ゲストログイン
+  devise_scope :user do
+    post 'users/guest_sign_in', to: 'public/sessions#guest_sign_in'
+  end
+
 end

@@ -7,11 +7,18 @@ class Public::SessionsController < Devise::SessionsController
 
 
   def after_sign_in_path_for(resource)
-    root_path
+    public_users_show_path(current_user)
   end
 
   def after_sign_out_path_for(resource)
     root_path
+  end
+
+  def guest_sign_in
+    user = User.guest
+    sign_in user
+    flash[:notice] = "ゲストユーザーとしてログインしました"
+    redirect_to public_users_show_path(current_user)
   end
 
   # GET /resource/sign_in
@@ -39,13 +46,14 @@ class Public::SessionsController < Devise::SessionsController
 #退会しているかを判断するメソッド
 def user_state
   ##[処理内容]入力されたemailからアカウントを１件取得
-  @user = User.find_by(email: params[:user][:email])
+  @user = User.find_by(user_name: params[:user][:user_name])
   ##アカウントを取得できなかった場合、このメソッドを終了する
   return if !@user
   ##[処理内容２]取得したアカウントのパスワードと入力されたパスワードが入力されたパスワードが一致しているか判別
   if @user.valid_password?(params[:user][:password]) && @user.is_deleted == true
+    flash[:notice] = "退会済みです。再度ご登録をしてご利用ください。"
     ##処理内容３
-      redirect_to new_user_session_path
+    redirect_to new_user_session_path
   end
 end
 

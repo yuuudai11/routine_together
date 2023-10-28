@@ -1,2 +1,41 @@
-<h1>Public::Homes#top</h1>
-<p>Find me in app/views/public/homes/top.html.erb</p>
+<% if flash[:notice] %>
+<div class="alert-success" role="alert">
+  <p class="notice text-center" style="color:green;">
+    <%= flash[:notice] %>
+  </p>
+</div>
+<% end %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 mt-3 text-center px-3">
+      <h1>ようこそ！<strong>RoutineTogether</strong>へ！</h1>
+      <h3>自分の習慣化スキルをシェアしよう！</h3>
+      <h3>習慣化が苦手な方は、他のユーザーの習慣を見て参考にしよう！</h3>
+
+      <%= link_to new_user_session_path do %>
+      <button class="btn btn-info btn-block mb-3">
+      ログイン
+      </button>
+      <% end %>
+
+      <%= link_to new_user_registration_path do %>
+      <button class="btn btn-success btn-block mb-3">
+      新規登録
+      </button>
+      <% end %>
+
+      <%= link_to users_guest_sign_in_path,method: :post do %>
+      <button class="btn btn btn-block mb-3">
+        ゲストログイン
+      </button>
+      <% end %>
+
+       <%= link_to new_admin_session_path do %>
+       <button class="btn btn btn-block mb-3">
+         管理者の方はこちら
+       </button>
+       <% end %>
+    </div>
+  </div>
+</div>

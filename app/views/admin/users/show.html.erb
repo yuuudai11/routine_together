@@ -1,2 +1,106 @@
-<h1>Admin::Users#show</h1>
-<p>Find me in app/views/admin/users/show.html.erb</p>
+<div class="container">
+  <div class="row mt-3">
+    <h3>
+      <%= @user.user_name %>さんの詳細
+    </h3>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12">
+      <table>
+        <tr>
+          <td>
+            ユーザーID
+          </td>
+          <td>
+            <%= @user.id %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            ユーザー名
+          </td>
+          <td>
+            <%= @user.user_name %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            メールアドレス
+          </td>
+          <td>
+            <%= @user.email %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            会員ステータス
+          </td>
+          <td>
+            <% if @user.is_deleted == false %>
+            <div class="text-success">
+            <%= "有効" %>
+            </div>
+            <% else %>
+            <div class="text-muted">
+            <%= "無効" %>
+            </div>
+            <% end %>
+          </td>
+        </tr>
+
+        <tr>
+          <td> </td>
+          <td>
+            <%= link_to admin_user_edit_path(@user) do %>
+            <button class="btn btn-success">
+              編集する
+            </button>
+            <% end %>
+            <%= link_to admin_path do %>
+            <button class="btn btn-info">
+              ユーザー一覧へ戻る
+            </button>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <h3>
+      <%= @user.user_name %>さんのコメント一覧
+    </h3>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12">
+      <table class="table">
+        <% @comment.each do |c| %>
+        <tr>
+          <td colspan="3">
+            <%= c.comment %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= c.user.user_name %>
+          </td>
+          <td>
+            コメントした日：<%= c.updated_at %>
+          </td>
+          <td>
+            <%= link_to admin_comments_destroy_path(c), method: :delete,
+            "data-confirm" => "本当に削除しますか？" do %>
+            <button>
+              コメント削除
+            </button>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </table>
+    </div>
+  </div>
+</div>

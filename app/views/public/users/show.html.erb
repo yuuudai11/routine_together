@@ -1,3 +1,11 @@
+<% if flash[:notice] %>
+<div class="alert-success" role="alert">
+  <p class="notice text-center" style="color:green;">
+    <%= flash[:notice] %>
+  </p>
+</div>
+<% end %>
+
 <div class="container">
   <div class="row">
     <div class="col-10 mx-auto mt-3">
@@ -20,7 +28,7 @@
           <tr>
             <td><b>ステータス</b></td>
             <td>
-              <b>statusを参照</b>
+              <b><%= @status.nil? ? '幕の内第１歩' : @status.status_name %></b>
             </td>
           </tr>
         </tbody>
@@ -43,10 +51,10 @@
 
   <div class="row">
     <div class="col-10 mx-auto">
-      <h3>MT ROUTINE</h3>
-      <% if @post_routines.any? %>
+      <h3>MY ROUTINE</h3>
+      <% if @post_routines.length > 0 %>
       <table>
-        <% @post_routines.each do |routine| %>
+      <% @post_routines.each do |routine| %>
         <tr>
           <td>
             <h3>
@@ -60,13 +68,22 @@
 
         <tr>
           <td>
-            <button class="btn btn-info">
-              達成できた！
-            </button>
+            <%= routine.continue_days %>日継続中！
           </td>
-          
           <td>
-            
+            <%= link_to public_post_routines_count_up_path(routine), method: :post do %>
+            <button class="btn btn-info">
+              達成できた
+            </button>
+            <% end %>
+          </td>
+
+          <td>
+            <%= link_to public_post_routines_count0_path(routine), method: :post do %>
+            <button class="btn btn-danger">
+              達成できなかった
+            </button>
+            <% end %>
           </td>
 
           <td>
@@ -79,13 +96,17 @@
         </tr>
         <% end %>
       </table>
+      <% else %>
+      <div>
+        習慣を登録してください
+      </div>
       <% end %>
 
   <!--習慣を登録、投稿する-->
       <h3>POST ROUTINE</h3>
       <%= form_with model: @post_routine, url: public_post_routines_create_path, method: :post do |f| %>
       <div class="form-group">
-        <%= f.text_area :routine_info, placeholder: "習慣を書いてください" %>
+        <%= f.text_area :routine_info, placeholder: "習慣を書いてください(1~30)" %>
       </div>
 
 <!--ジャンルを指定するラジオボタン-->

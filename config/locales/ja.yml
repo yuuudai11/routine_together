@@ -5,3 +5,9 @@
           study: "学習"
           exercise: "運動"
           others: "その他"
+
+
+  # activerecord:
+  # errors:
+  #   messages:
+  #     record_invalid: "バリデーションに失敗しました: %{errors}"
